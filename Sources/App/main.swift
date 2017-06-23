@@ -36,11 +36,7 @@ drop.get("dog") { (response) -> ResponseRepresentable in
     let result = vaporAPNS.send(pushMessage, to: "1df391265638af7684b4e9a600895a730d57242ea098cd227fff876a15e8df40")
     switch result {
     case .success(let messageID, _, _):
-<<<<<<< HEAD
         return "\(messageID)-推送出去了"        
-=======
-        return "\(messageID)"
->>>>>>> dadf96c0a9a4b0873f78683d85120175dfb81623
     case .error(_, _, let error):
         return "\(error)"
     case .networkError(let error):
