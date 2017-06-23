@@ -45,6 +45,8 @@ drop.post("v1","push") { (request) -> ResponseRepresentable in
             "msg" : "推送失败了",
             ])
     }
+    print("token-\(token)")
+    print("msg-\(msg)")
     background {
         opt.forceCurlInstall = true
         let payload = Payload(title: "hi", body: msg)
