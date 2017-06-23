@@ -6,8 +6,8 @@ extension Config {
         // (add your own types here)
         Node.fuzzy = [Row.self, JSON.self, Node.self]
         
-//        try setupProviders()
-//        try setupPreparations()
+        try setupProviders()
+        try setupPreparations()
     }
     
     /// Configure providers
