@@ -23,25 +23,46 @@ let drop = try Droplet(config)
 drop.database?.log = { query in
     print(query)
 }
-drop.get("dog") { (response) -> ResponseRepresentable in
-    
-    let users = try User.makeQuery().join(Dog.self).filter(Dog.self, "name", "小白").all()
-    let dog = try Dog.makeQuery().all()
+drop.get("v1","push") { (request) -> ResponseRepresentable in
+//    
+//    let users = try User.makeQuery().join(Dog.self).filter(Dog.self, "name", "小白").all()
+//    let dog = try Dog.makeQuery().all()
+    guard let token = request.data["token"]?.string else{
+            return try JSON(node: [
+            "code": 1,
+            "msg" : "缺少token",
+            ])
+    }
+    guard let msg = request.data["msg"]?.string else{
+        return try JSON(node: [
+            "code": 1,
+            "msg" : "缺少msg",
+            ])
+    }
     guard var opt = try? Options(topic: "com.Sunny.walking", certPath: "/root/VaporAPNS/Public/pem/crt.pem", keyPath: "/root/VaporAPNS/Public/pem/key-noenc.pem"), let vaporAPNS = try? VaporAPNS(options: opt) else {
-        return "推送失败"
+        return try JSON(node: [
+            "code": 1,
+            "msg" : "推送失败了",
+            ])
     }
-    opt.forceCurlInstall = true
-    let payload = Payload(title: "hi", body: "baobao")
-    let pushMessage = ApplePushMessage(priority: .immediately, payload: payload, sandbox: true)
-    let result = vaporAPNS.send(pushMessage, to: "1df391265638af7684b4e9a600895a730d57242ea098cd227fff876a15e8df40")
-    switch result {
-    case .success(let messageID, _, _):
-        return "\(messageID)-推送出去了"        
-    case .error(_, _, let error):
-        return "\(error)"
-    case .networkError(let error):
-        return "\(error)"
+    background {
+        opt.forceCurlInstall = true
+        let payload = Payload(message: msg)
+        let pushMessage = ApplePushMessage(priority: .immediately, payload: payload, sandbox: true)
+        let result = vaporAPNS.send(pushMessage, to: token)
+        switch result {
+        case .success(let messageID, _, _):
+            print ("\(messageID)-推送出去了")
+        case .error(_, _, let error):
+            print ("\(error)")
+        case .networkError(let error):
+            print ("\(error)")
+        }
     }
+    return try JSON(node: [
+        "code": 0,
+        "msg" : "success",
+        ])
 }
 
 try drop.run()
