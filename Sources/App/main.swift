@@ -27,24 +27,22 @@ drop.get("dog") { (response) -> ResponseRepresentable in
     
     let users = try User.makeQuery().join(Dog.self).filter(Dog.self, "name", "小白").all()
     let dog = try Dog.makeQuery().all()
-    guard var opt = try? Options(topic: "com.Sunny.walking", certPath: "/Users/yzjtest/Desktop/walkingLovePem/crt.pem", keyPath: "/Users/yzjtest/Desktop/walkingLovePem/key-noenc.pem"), let vaporAPNS = try? VaporAPNS(options: opt) else {
+    guard var opt = try? Options(topic: "com.Sunny.walking", certPath: "/root/VaporAPNS/Public/pem/crt.pem", keyPath: "/root/VaporAPNS/Public/pem/key-noenc.pem"), let vaporAPNS = try? VaporAPNS(options: opt) else {
         return "推送失败"
     }
     opt.forceCurlInstall = true
     let payload = Payload(title: "hi", body: "baobao")
     let pushMessage = ApplePushMessage(priority: .immediately, payload: payload, sandbox: true)
-    let result = vaporAPNS.send(pushMessage, to: "cfc2d34ad1aff99bbac69259feb1da3480503ed4fa9414dddaf24c27d209bf0b")
+    let result = vaporAPNS.send(pushMessage, to: "1df391265638af7684b4e9a600895a730d57242ea098cd227fff876a15e8df40")
     switch result {
     case .success(let messageID, _, _):
-        
-        break
+        return "\(messageID)-推送出去了"        
     case .error(_, _, let error):
         return "\(error)"
     case .networkError(let error):
         
         return "\(error)"
     }
-    return "123"
 }
 
 try drop.run()
