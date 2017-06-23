@@ -47,7 +47,6 @@ drop.post("v1","push") { (request) -> ResponseRepresentable in
     }
     print("token-\(token)")
     print("msg-\(msg)")
-    background {
         opt.forceCurlInstall = true
         let payload = Payload(title: "hi", body: msg)
         let pushMessage = ApplePushMessage(priority: .immediately, payload: payload, sandbox: true)
@@ -60,7 +59,6 @@ drop.post("v1","push") { (request) -> ResponseRepresentable in
         case .networkError(let error):
             print ("\(error)")
         }
-    }
     return try JSON(node: [
         "code": 0,
         "msg" : "success",
