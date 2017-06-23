@@ -36,15 +36,12 @@ drop.get("dog") { (response) -> ResponseRepresentable in
     let result = vaporAPNS.send(pushMessage, to: "cfc2d34ad1aff99bbac69259feb1da3480503ed4fa9414dddaf24c27d209bf0b")
     switch result {
     case .success(let messageID, _, _):
-        
-        break
+        return "\(messageID)"
     case .error(_, _, let error):
         return "\(error)"
     case .networkError(let error):
-        
         return "\(error)"
     }
-    return "123"
 }
 
 try drop.run()
