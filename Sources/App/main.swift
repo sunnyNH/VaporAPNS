@@ -50,6 +50,8 @@ drop.post("v1","push") { (request) -> ResponseRepresentable in
     background {
         opt.forceCurlInstall = true
         let payload = Payload(message: msg)
+        payload.sound = "default"
+        payload.badge = 1
         let pushMessage = ApplePushMessage(priority: .immediately, payload: payload, sandbox: true)
         let result = vaporAPNS.send(pushMessage, to: token)
         switch result {
