@@ -27,19 +27,13 @@ drop.post("v1","push") { (request) -> ResponseRepresentable in
 //    
 //    let users = try User.makeQuery().join(Dog.self).filter(Dog.self, "name", "小白").all()
 //    let dog = try Dog.makeQuery().all()
-    guard let token = request.data["token"]?.string else{
+    guard let token = request.data["token"]?.string,let msg = request.data["msg"]?.string else{
             return try JSON(node: [
             "code": 1,
-            "msg" : "缺少token",
+            "msg" : "缺少参数",
             ])
     }
-    guard let msg = request.data["msg"]?.string else{
-        return try JSON(node: [
-            "code": 1,
-            "msg" : "缺少msg",
-            ])
-    }
-    guard var opt = try? Options(topic: "com.Sunny.walking", certPath: "/root/VaporAPNS/Public/pem/crt.pem", keyPath: "/root/VaporAPNS/Public/pem/key-noenc.pem"), let vaporAPNS = try? VaporAPNS(options: opt) else {
+    guard var opt = try? Options(topic: "com.Sunny.walking", certPath: "/Users/yzjtest/Desktop/VaporAPNS/Public/pem/crt.pem", keyPath: "/Users/yzjtest/Desktop/VaporAPNS/Public/pem/key-noenc.pem"), let vaporAPNS = try? VaporAPNS(options: opt) else {
         return try JSON(node: [
             "code": 1,
             "msg" : "推送失败了",
