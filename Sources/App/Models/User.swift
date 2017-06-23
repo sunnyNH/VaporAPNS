@@ -5,8 +5,6 @@
 //  Created by niuhui on 2017/6/21.
 //
 //
-
-import Cocoa
 import Validation
 import Crypto
 import FluentProvider
