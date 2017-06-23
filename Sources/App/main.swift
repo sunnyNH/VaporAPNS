@@ -14,7 +14,7 @@ import VaporAPNS
 /// this should setup all the routes and special
 /// features of our app
 ///
-/// .run() runs the Droplet's commands, 
+/// .run() runs the Droplet's commands,
 /// if no command is given, it will default to "serve"
 let config = try Config()
 try config.setup()
@@ -36,12 +36,12 @@ drop.get("dog") { (response) -> ResponseRepresentable in
     let result = vaporAPNS.send(pushMessage, to: "cfc2d34ad1aff99bbac69259feb1da3480503ed4fa9414dddaf24c27d209bf0b")
     switch result {
     case .success(let messageID, _, _):
-
+        
         break
     case .error(_, _, let error):
         return "\(error)"
     case .networkError(let error):
-
+        
         return "\(error)"
     }
     return "123"
