@@ -23,7 +23,7 @@ let drop = try Droplet(config)
 drop.database?.log = { query in
     print(query)
 }
-drop.get("v1","push") { (request) -> ResponseRepresentable in
+drop.post("v1","push") { (request) -> ResponseRepresentable in
 //    
 //    let users = try User.makeQuery().join(Dog.self).filter(Dog.self, "name", "小白").all()
 //    let dog = try Dog.makeQuery().all()
