@@ -54,7 +54,7 @@ background {
             return format.string(from: Date())
         }
         let url = "http://jisutqybmf.market.alicloudapi.com/weather/query?citycode=101010100"
-        if monthDayTimeStr() == "01" {
+        if monthDayTimeStr() == "08" {
             //            let req = try drop.client.post(url+"users",["Authorization":"Bearer \(access_token)"],users.makeBody())
             
             do {
