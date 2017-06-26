@@ -26,7 +26,7 @@ drop.database?.log = { query in
 }
 func push(_ token: String , _ msg: String) {
     background {
-        guard var opt = try? Options(topic: "com.Sunny.walking", certPath: "/Users/yzjtest/Desktop/VaporAPNS/Public/pem/crt.pem", keyPath: "/Users/yzjtest/Desktop/VaporAPNS/Public/pem/key-noenc.pem"), let vaporAPNS = try? VaporAPNS(options: opt) else {
+        guard var opt = try? Options(topic: "com.Sunny.walking", certPath: "/root/VaporAPNS/Public/pem/crt.pem", keyPath: "/root/VaporAPNS/Public/pem/key-noenc.pem"), let vaporAPNS = try? VaporAPNS(options: opt) else {
             print("失败了")
             return
         }
