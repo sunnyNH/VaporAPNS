@@ -55,11 +55,10 @@ background {
     var index = 1
     while true {
         if let time = monthDayTimeStr().int {
-            if time >= 8 || time <= 22 {
+            if time >= 8 && time <= 22 {
                 do {
                     let req = try drop.client.post("http://japi.juhe.cn/joke/content/text.from?page=\(index)&pagesize=1&key=f58ec3835cf3f6a71222aea734ff6763",["Content-Type":"application/json"])
                     index += 1
-                    let json = ["123":"123"]
                     if let bytes = req.body.bytes{
                         let data = Data(bytes: bytes)
                         if let json = try? JSONSerialization.jsonObject(with: data) as? Dictionary<String, Any> {
@@ -68,7 +67,6 @@ background {
                                 if let arrs = result["data"] as? [[String:Any]] {
                                     if arrs.count > 0 {
                                         let model = arrs[0]
-                                        let temp = try? model.makeNode(in: nil)
                                         if let msg = model["content"] as? String {
                                             print(msg)
                                             push("80e555c83f362111fb04e8e7d82be21f06cf113f90671d0cdf5d0e88e9fc848d", msg)
@@ -84,15 +82,13 @@ background {
                 }
             }
         }
-        drop.console.wait(seconds: 10)
+        drop.console.wait(seconds: 61*60)
     }
 }
 background {
     while true {
         let url = "http://jisutqybmf.market.alicloudapi.com/weather/query?citycode=101010100"
         if monthDayTimeStr() == "08" || monthDayTimeStr() == "21" {
-            //            let req = try drop.client.post(url+"users",["Authorization":"Bearer \(access_token)"],users.makeBody())
-            
             do {
                 let req = try drop.client.get(url, ["Authorization":"APPCODE 824edf8360514cae9315949d81650998"])
                 if req.status.statusCode == 200 {
