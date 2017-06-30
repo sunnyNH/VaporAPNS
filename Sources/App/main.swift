@@ -51,34 +51,9 @@ func monthDayTimeStr() -> String {
     format.dateFormat = "HH"
     return format.string(from: Date())
 }
-<<<<<<< HEAD
-//background {
-//    var index = 1
-//    while true {
-//        if let time = monthDayTimeStr().int {
-//            if time >= 8 || time <= 22 {
-//                do {
-//                    let req = try drop.client.post("http://japi.juhe.cn/joke/content/text.from?page=\(index)&pagesize=10&key=f58ec3835cf3f6a71222aea734ff6763",["Content-Type":"application/json"])
-//                    index += 1
-//                    if let content = req.data["result"]?["data"]?[0]?["content"]?.string {
-//                        push("80e555c83f362111fb04e8e7d82be21f06cf113f90671d0cdf5d0e88e9fc848d", content)
-//                        push("1df391265638af7684b4e9a600895a730d57242ea098cd227fff876a15e8df40", content)
-//                    }
-//                } catch {
-//                    
-//                }
-//            }
-//        }
-//        drop.console.wait(seconds: 60*60)
-//    }
-//}
-=======
->>>>>>> fab19ea11111909a0a42c7b7bd1aa5e9a4671217
 background {
     var index = 1
     while true {
-<<<<<<< HEAD
-=======
         if let time = monthDayTimeStr().int {
             if time >= 8 || time <= 22 {
                 do {
@@ -114,7 +89,6 @@ background {
 }
 background {
     while true {
->>>>>>> fab19ea11111909a0a42c7b7bd1aa5e9a4671217
         let url = "http://jisutqybmf.market.alicloudapi.com/weather/query?citycode=101010100"
         if monthDayTimeStr() == "08" || monthDayTimeStr() == "21" {
             //            let req = try drop.client.post(url+"users",["Authorization":"Bearer \(access_token)"],users.makeBody())
