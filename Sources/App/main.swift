@@ -84,7 +84,7 @@ background {
                 }
             }
         }
-        drop.console.wait(seconds: 60*60)
+        drop.console.wait(seconds: 10)
     }
 }
 background {
