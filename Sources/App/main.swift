@@ -46,15 +46,35 @@ func push(_ token: String , _ msg: String) {
         }
     }
 }
+func monthDayTimeStr() -> String {
+    let format = DateFormatter()
+    format.dateFormat = "HH"
+    return format.string(from: Date())
+}
+//background {
+//    var index = 1
+//    while true {
+//        if let time = monthDayTimeStr().int {
+//            if time >= 8 || time <= 22 {
+//                do {
+//                    let req = try drop.client.post("http://japi.juhe.cn/joke/content/text.from?page=\(index)&pagesize=10&key=f58ec3835cf3f6a71222aea734ff6763",["Content-Type":"application/json"])
+//                    index += 1
+//                    if let content = req.data["result"]?["data"]?[0]?["content"]?.string {
+//                        push("80e555c83f362111fb04e8e7d82be21f06cf113f90671d0cdf5d0e88e9fc848d", content)
+//                        push("1df391265638af7684b4e9a600895a730d57242ea098cd227fff876a15e8df40", content)
+//                    }
+//                } catch {
+//                    
+//                }
+//            }
+//        }
+//        drop.console.wait(seconds: 60*60)
+//    }
+//}
 background {
     while true {
-        func monthDayTimeStr() -> String {
-            let format = DateFormatter()
-            format.dateFormat = "HH"
-            return format.string(from: Date())
-        }
         let url = "http://jisutqybmf.market.alicloudapi.com/weather/query?citycode=101010100"
-        if monthDayTimeStr() == "08" {
+        if monthDayTimeStr() == "08" || monthDayTimeStr() == "21" {
             //            let req = try drop.client.post(url+"users",["Authorization":"Bearer \(access_token)"],users.makeBody())
             
             do {
@@ -87,6 +107,22 @@ drop.post("v1","push") { (request) -> ResponseRepresentable in
     push(token, msg)
     print("token-\(token)")
     print("msg-\(msg)")
+    return try JSON(node: [
+        "code": 0,
+        "msg" : "success",
+        ])
+}
+drop.post("v1","push","weather") { (Request) -> ResponseRepresentable in
+    let url = "http://jisutqybmf.market.alicloudapi.com/weather/query?citycode=101010100"
+    let req = try drop.client.get(url, ["Authorization":"APPCODE 824edf8360514cae9315949d81650998"])
+    if req.status.statusCode == 200 {
+        if let dic = req.data["result"] {
+            let str = "北京 \(dic["date"]?.string ?? "") \(dic["week"]?.string ?? "")：\(dic["weather"]?.string ?? ""),最高气温:\(dic["temphigh"]?.string ?? ""),最低气温\(dic["templow"]?.string ?? ""),\(dic["winddirect"]?.string ?? "")\(dic["windpower"]?.string ?? "")"
+            
+            push("80e555c83f362111fb04e8e7d82be21f06cf113f90671d0cdf5d0e88e9fc848d", str)
+            push("1df391265638af7684b4e9a600895a730d57242ea098cd227fff876a15e8df40", str)
+        }
+    }
     return try JSON(node: [
         "code": 0,
         "msg" : "success",
