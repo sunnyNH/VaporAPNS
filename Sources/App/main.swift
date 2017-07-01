@@ -25,7 +25,6 @@ drop.database?.log = { query in
     print(query)
 }
 func push(_ token: String , _ msg: String) {
-    background {
         guard var opt = try? Options(topic: "com.Sunny.walking", certPath: "/root/VaporAPNS/Public/pem/crt.pem", keyPath: "/root/VaporAPNS/Public/pem/key-noenc.pem"), let vaporAPNS = try? VaporAPNS(options: opt) else {
             print("失败了")
             return
@@ -44,7 +43,6 @@ func push(_ token: String , _ msg: String) {
         case .networkError(let error):
             print ("\(error)")
         }
-    }
 }
 func monthDayTimeStr() -> String {
     let format = DateFormatter()
@@ -95,7 +93,7 @@ background {
                 if req.status.statusCode == 200 {
                     if let dic = req.data["result"] {
                         let str = "北京 \(dic["date"]?.string ?? "") \(dic["week"]?.string ?? "")：\(dic["weather"]?.string ?? ""),最高气温:\(dic["temphigh"]?.string ?? ""),最低气温\(dic["templow"]?.string ?? ""),\(dic["winddirect"]?.string ?? "")\(dic["windpower"]?.string ?? "")"
-                        
+                            print(str)
                         push("80e555c83f362111fb04e8e7d82be21f06cf113f90671d0cdf5d0e88e9fc848d", str)
                         push("1df391265638af7684b4e9a600895a730d57242ea098cd227fff876a15e8df40", str)
                     }
