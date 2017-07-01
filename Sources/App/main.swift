@@ -55,7 +55,7 @@ background {
     var index = 1
     while true {
         if let time = monthDayTimeStr().int {
-            if time >= 8 && time <= 22 {
+            if time >= 8 && time <= 24 {
                 do {
                     let req = try drop.client.post("http://japi.juhe.cn/joke/content/text.from?page=\(index)&pagesize=1&key=f58ec3835cf3f6a71222aea734ff6763",["Content-Type":"application/json"])
                     index += 1
@@ -82,7 +82,7 @@ background {
                 }
             }
         }
-        drop.console.wait(seconds: 61*60)
+        drop.console.wait(seconds: 60*30)
     }
 }
 background {
