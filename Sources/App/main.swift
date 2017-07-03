@@ -64,7 +64,7 @@ background {
             }
         }
         print("循环 ---\(index)")
-        drop.console.wait(seconds: 60*60)
+        drop.console.wait(seconds: 61*60)
     }
 }
 background {
