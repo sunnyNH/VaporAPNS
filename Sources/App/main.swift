@@ -33,40 +33,40 @@ func monthDayTimeStr() -> String {
     format.dateFormat = "HH"
     return format.string(from: Date())
 }
-background {
-    var index = 1
-    while true {
-        if let time = monthDayTimeStr().int {
-            if time >= 8 && time <= 22 {
-                do {
-                    let req = try drop.client.post("http://japi.juhe.cn/joke/content/text.from?page=\(index)&pagesize=1&key=f58ec3835cf3f6a71222aea734ff6763",["Content-Type":"application/json"])
-                    index += 1
-                    if let bytes = req.body.bytes{
-                        let data = Data(bytes: bytes)
-                        if let json = try? JSONSerialization.jsonObject(with: data) as? Dictionary<String, Any> {
-                            if let result = json?["result"] as? Dictionary<String,Any> {
-                                if let arrs = result["data"] as? [[String:Any]] {
-                                    if arrs.count > 0 {
-                                        let model = arrs[0]
-                                        if let msg = model["content"] as? String {
-                                            print(msg)
-                                            push("80e555c83f362111fb04e8e7d82be21f06cf113f90671d0cdf5d0e88e9fc848d", msg)
-                                            push("1df391265638af7684b4e9a600895a730d57242ea098cd227fff876a15e8df40", msg)
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                } catch {
-                    print("req-有问题")
-                }
-            }
-        }
-        print("循环 ---\(index)")
-        drop.console.wait(seconds: 61*60)
-    }
-}
+//background {
+//    var index = 1
+//    while true {
+//        if let time = monthDayTimeStr().int {
+//            if time >= 8 && time <= 22 {
+//                do {
+//                    let req = try drop.client.post("http://japi.juhe.cn/joke/content/text.from?page=\(index)&pagesize=1&key=f58ec3835cf3f6a71222aea734ff6763",["Content-Type":"application/json"])
+//                    index += 1
+//                    if let bytes = req.body.bytes{
+//                        let data = Data(bytes: bytes)
+//                        if let json = try? JSONSerialization.jsonObject(with: data) as? Dictionary<String, Any> {
+//                            if let result = json?["result"] as? Dictionary<String,Any> {
+//                                if let arrs = result["data"] as? [[String:Any]] {
+//                                    if arrs.count > 0 {
+//                                        let model = arrs[0]
+//                                        if let msg = model["content"] as? String {
+//                                            print(msg)
+//                                            push("80e555c83f362111fb04e8e7d82be21f06cf113f90671d0cdf5d0e88e9fc848d", msg)
+//                                            push("1df391265638af7684b4e9a600895a730d57242ea098cd227fff876a15e8df40", msg)
+//                                        }
+//                                    }
+//                                }
+//                            }
+//                        }
+//                    }
+//                } catch {
+//                    print("req-有问题")
+//                }
+//            }
+//        }
+//        print("循环 ---\(index)")
+//        drop.console.wait(seconds: 61*60)
+//    }
+//}
 background {
     while true {
         let url = "http://jisutqybmf.market.alicloudapi.com/weather/query?citycode=101010100"
