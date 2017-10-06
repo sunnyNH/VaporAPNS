@@ -33,6 +33,7 @@ func monthDayTimeStr() -> String {
     format.dateFormat = "HH"
     return format.string(from: Date())
 }
+
 //background {
 //    var index = 1
 //    while true {
